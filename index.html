@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Valentine's Surprise For Mercy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Playfair Display', serif;
+            background: #0a0a1a;
+            color: #f5e9e9;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Opening Curtain */
+        #curtain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #8b0000, #4a0000);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: curtainRise 2s ease-in-out 3s forwards;
+        }
+        @keyframes curtainRise {
+            to { transform: translateY(-100%); }
+        }
+        .curtain-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: gold;
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInText 1.5s ease-in 0.5s forwards;
+        }
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+        .curtain-subtext {
+            font-size: 1.5rem;
+            color: #ffd700;
+            opacity: 0;
+            animation: fadeInText 1.5s ease-in 1.5s forwards;
+        }
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0;
+            animation: fadeInMain 1s ease-out 4s forwards;
+        }
+        @keyframes fadeInMain {
+            to { opacity: 1; }
+        }
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+        .her-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 6rem;
+            color: #ffafbd;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 175, 189, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .her-name:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 50px rgba(255, 175, 189, 0.8);
+        }
+        .tagline {
+            font-size: 1.4rem;
+            color: #d1b3b3;
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        /* Music Controls */
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .music-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .music-btn:hover {
+            transform: scale(1.2);
+        }
+        /* Gallery with Floating Animation */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .photo-frame {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            cursor: pointer;
+            height: 380px;
+            animation: float 6s ease-in-out infinite;
+        }
+        .photo-frame:nth-child(2n) {
+            animation-delay: 1s;
+        }
+        .photo-frame:nth-child(3n) {
+            animation-delay: 2s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .photo-frame:hover {
+            transform: scale(1.05);
+            box-shadow: 0 30px 60px rgba(255, 175, 189, 0.4);
+            animation-play-state: paused;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s;
+        }
+        .photo-frame:hover img {
+            transform: scale(1.1);
+        }
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(138, 0, 0, 0.9), transparent);
+            color: white;
+            padding: 30px 20px 25px;
+            transform: translateY(100%);
+            transition: transform 0.5s;
+        }
+        .photo-frame:hover .photo-overlay {
+            transform: translateY(0);
+        }
+        .photo-overlay h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        /* Memory Timeline */
+        .timeline {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: #555;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .timeline-dot.active {
+            background: #ffafbd;
+            transform: scale(1.5);
+            box-shadow: 0 0 20px #ffafbd;
+        }
+        .timeline-dot:hover::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+        /* Message Screen */
+        .message-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 26, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .message-card {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            padding: 60px;
+            border-radius: 30px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+            position: relative;
+            border: 2px solid rgba(255, 175, 189, 0.3);
+            transform: scale(0.8);
+            animation: cardPop 0.7s forwards;
+        }
+        @keyframes cardPop {
+            to { transform: scale(1); }
+        }
+        .message-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            color: #ffafbd;
+        }
+        .message-text {
+            font-size: 1.6rem;
+            line-height: 1.9;
+            margin-bottom: 40px;
+            color: #f0e6e6;
+            min-height: 150px;
+            text-align: left;
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #ffafbd;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #ffd700;
+            text-align: right;
+            margin-top: 30px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 175, 189, 0.1);
+            border: 1px solid #ffafbd;
+            color: #ffafbd;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .close-btn:hover {
+            background: #ffafbd;
+            color: #1a1a2e;
+            transform: rotate(90deg);
+        }
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            color: rgba(255, 175, 189, 0.7);
+            font-size: 24px;
+            animation: particleFloat 15s linear infinite;
+        }
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        /* Footer */
+        .footer-note {
+            margin-top: 50px;
+            color: #888;
+            font-size: 1.1rem;
+        }
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .gallery { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .her-name { font-size: 4.5rem; }
+            .curtain-text { font-size: 2.8rem; }
+            .gallery { grid-template-columns: 1fr; }
+            .photo-frame { height: 350px; }
+            .message-card { padding: 40px; }
+            .message-card h2 { font-size: 2.8rem; }
+            .message-text { font-size: 1.4rem; }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5rem; }
+            .her-name { font-size: 3.5rem; }
+            .curtain-text { font-size: 2.2rem; }
+            .photo-frame { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Opening Curtain -->
+    <div id="curtain">
+        <div class="curtain-text">A Special Presentation</div>
+        <div class="curtain-subtext">For Someone Extraordinary</div>
+    </div>
+    
+    <!-- Background Music (Romantic Piano) -->
+    <audio id="bgMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moment-488.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Music Controls -->
+    <div class="music-controls">
+        <button class="music-btn" id="musicToggle">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        <span>Romantic Piano</span>
+    </div>
+    
+    <!-- Animated Particles -->
+    <div class="particles" id="particleContainer"></div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <h1>A Valentine's Journey For</h1>
+        <div class="her-name" id="mercyName">Mercy</div>
+        <p class="tagline">Each photograph is a window to a beautiful memory. Click to discover a message written just for you, Mercy.</p>
+        
+        <!-- Interactive Timeline -->
+        <div class="timeline" id="memoryTimeline">
+            <div class="timeline-dot active" data-title="The Smile" data-message="1"></div>
+            <div class="timeline-dot" data-title="Your Presence" data-message="2"></div>
+            <div class="timeline-dot" data-title="Pure Joy" data-message="3"></div>
+            <div class="timeline-dot" data-title="Thoughtful Gaze" data-message="4"></div>
+            <div class="timeline-dot" data-title="Cherished Memory" data-message="5"></div>
+            <div class="timeline-dot" data-title="Authentically You" data-message="6"></div>
+        </div>
+        
+        <!-- Photo Gallery -->
+        <div class="gallery" id="photoGallery">
+            <div class="photo-frame" data-message="1">
+                <img src="https://i.imgur.com/Y02Zfi2.jpg" alt="Mercy's beautiful smile">
+                <div class="photo-overlay">
+                    <h3>The Smile</h3>
+                    <p>A radiant expression that brightens every moment</p>
+                </div>
+            </div>
+            <div class="photo-frame" data-message="2">
+                <img src="https://i.imgur.com/ZwWvVow.jpg" alt="Mercy's lovely presence">
+                <div class="photo-overlay">
+                    <h3>Your Presence</h3>
+                    <p>A calming energy that makes every space better</p>
+                </div>
+            </div>
+            <div class="photo-frame" data-message="3">
+                <img src="https://i.imgur.com/zO1i3rl.jpg" alt="Mercy's joyful spirit">
+                <div class="photo-overlay">
+                    <h3>Pure Joy</h3>
+                    <p>Laughter and happiness that's truly infectious</p>
+                </div>
+            </div>
+            <div class="photo-frame" data-message="4">
+                <img src="https://i.imgur.com/O07So0q.jpg" alt="Mercy's thoughtful gaze">
+                <div class="photo-overlay">
+                    <h3>Thoughtful Gaze</h3>
+                    <p>A look that reveals depth and compassion</p>
+                </div>
+            </div>
+            <div class="photo-frame" data-message="5">
+                <img src="https://i.imgur.com/brGNsm8.jpg" alt="A cherished memory with Mercy">
+                <div class="photo-overlay">
+                    <h3>Cherished Memory</h3>
+                    <p>A moment in time made perfect</p>
+                </div>
+            </div>
+            <div class="photo-frame" data-message="6">
+                <img src="https://i.imgur.com/lgro0jh.jpg" alt="Mercy being authentically herself">
+                <div class="photo-overlay">
+                    <h3>Authentically You</h3>
+                    <p>Genuine in every way that matters</p>
+                </div>
+            </div>
+        </div>
+        
+        <p class="footer-note">Crafted with thoughtful care for an extraordinary person</p>
+    </div>
+    
+    <!-- Message Screen -->
+    <div class="message-screen" id="messageScreen">
+        <div class="message-card">
+            <button class="close-btn" id="closeMessage"><i class="fas fa-times"></i></button>
+            <h2 id="messageTitle">For Mercy</h2>
+            <div class="message-text" id="messageText"></div>
+            <div class="signature" id="messageSignature"></div>
+        </div>
+    </div>
+    
+    <script>
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create particles
+            createParticles();
+            
+            // Start background music (with user interaction)
+            setupMusic();
+            
+            // Setup timeline
+            setupTimeline();
+            
+            // Setup photo click events
+            setupGallery();
+            
+            // Setup close button
+            document.getElementById('closeMessage').addEventListener('click', closeMessage);
+            
+            // Setup Mercy name double-click (Easter egg)
+            document.getElementById('mercyName').addEventListener('dblclick', showEasterEgg);
+            
+            // Auto-open first message after curtain rises
+            setTimeout(() => {
+                if (!sessionStorage.getItem('mercyValentineShown')) {
+                    openMessage(1);
+                    sessionStorage.setItem('mercyValentineShown', 'true');
+                }
+            }, 4500);
+        });
+        
+        // ==================== PARTICLE SYSTEM ====================
+        function createParticles() {
+            const container = document.getElementById('particleContainer');
+            const symbols = ['❤', '💕', '💗', '💓'];
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                particle.style.opacity = Math.random() * 0.7 + 0.3;
+                container.appendChild(particle);
+            }
+        }
+        
+        // ==================== MUSIC SYSTEM ====================
+        function setupMusic() {
+            const music = document.getElementById('bgMusic');
+            const toggleBtn = document.getElementById('musicToggle');
+            const icon = toggleBtn.querySelector('i');
+            
+            // Try to play music after user interaction
+            function playMusic() {
+                music.volume = 0.4;
+                music.play().catch(e => console.log("Audio play failed:", e));
+                document.removeEventListener('click', playMusic);
+            }
+            
+            // Start music on first user interaction
+            document.addEventListener('click', playMusic, { once: true });
+            
+            // Toggle music on button click
+            toggleBtn.addEventListener('click', () => {
+                if (music.paused) {
+                    music.play();
+                    icon.className = 'fas fa-volume-up';
+                } else {
+                    music.pause();
+                    icon.className = 'fas fa-volume-mute';
+                }
+            });
+        }
+        
+        // ==================== TIMELINE ====================
+        function setupTimeline() {
+            const dots = document.querySelectorAll('.timeline-dot');
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    // Update active dot
+                    dots.forEach(d => d.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Open corresponding message
+                    const messageId = this.getAttribute('data-message');
+                    openMessage(messageId);
+                });
+            });
+        }
+        
+        // ==================== GALLERY & MESSAGES ====================
+        function setupGallery() {
+            const frames = document.querySelectorAll('.photo-frame');
+            
+            frames.forEach(frame => {
+                frame.addEventListener('click', function() {
+                    const messageId = this.getAttribute('data-message');
+                    openMessage(messageId);
+                    
+                    // Update timeline
+                    document.querySelectorAll('.timeline-dot').forEach(dot => {
+                        dot.classList.remove('active');
+                        if (dot.getAttribute('data-message') === messageId) {
+                            dot.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+        
+        // Messages for Mercy - ALL IN ENGLISH
+        const messagesForMercy = {
+            1: {
+                title: "That Beautiful Smile of Yours",
+                text: "Mercy, your smile is truly remarkable. It has a way of lighting up the space around you and bringing warmth to those who see it. This photo captures a genuine moment of joy that reflects your kind and generous nature.",
+                signature: "A smile that brightens every day"
+            },
+            2: {
+                title: "The Gift of Your Presence",
+                text: "Mercy, you have a special quality about your presence. There is a calm and steady energy you bring to any situation that makes everything feel more balanced. This photo reminds me of the quiet strength you possess.",
+                signature: "Grateful for your calming influence"
+            },
+            3: {
+                title: "Your Infectious Joy",
+                text: "Mercy, moments like these show your capacity for pure happiness. Your laughter is not just sound but an invitation for others to share in the moment. It is one of your most beautiful and uplifting qualities.",
+                signature: "Celebrating your joyful spirit"
+            },
+            4: {
+                title: "A Moment of Quiet Reflection",
+                text: "Mercy, this thoughtful gaze reveals the depth of your character. It shows someone who observes carefully, thinks deeply, and cares genuinely about the world around them. There is wisdom and compassion in that expression.",
+                signature: "Admiring your thoughtful nature"
+            },
+            5: {
+                title: "A Memory Worth Treasuring",
+                text: "Mercy, this moment feels like more than just a photograph. It captures a genuine connection and shared experience that becomes part of a meaningful story. These are the moments that stay in memory long after they pass.",
+                signature: "Remembering a beautiful time together"
+            },
+            6: {
+                title: "Authentically and Wonderfully You",
+                text: "Mercy, this photo shows you exactly as you are—authentic, graceful, and true to yourself. In a world that often asks people to be something different, your authenticity stands out as genuinely remarkable and inspiring.",
+                signature: "Honoring the person you truly are"
+            }
+        };
+        
+        // FIXED: Typing effect for messages
+        function typeWriter(text, element, speed = 30) {
+            // Clear any existing content and cursor
+            element.innerHTML = '';
+            
+            // Remove any existing cursor
+            const existingCursor = element.querySelector('.typing-cursor');
+            if (existingCursor) {
+                existingCursor.remove();
+            }
+            
+            let i = 0;
+            let currentText = '';
+            
+            function type() {
+                if (i < text.length) {
+                    currentText += text.charAt(i);
+                    element.innerHTML = currentText;
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    // Add blinking cursor at the end
+                    const cursor = document.createElement('span');
+                    cursor.className = 'typing-cursor';
+                    element.appendChild(cursor);
+                }
+            }
+            
+            type();
+        }
+        
+        function openMessage(messageId) {
+            const message = messagesForMercy[messageId];
+            const screen = document.getElementById('messageScreen');
+            const title = document.getElementById('messageTitle');
+            const text = document.getElementById('messageText');
+            const signature = document.getElementById('messageSignature');
+            
+            // Update content
+            title.textContent = message.title;
+            signature.textContent = message.signature;
+            
+            // Clear the text area completely
+            text.innerHTML = '';
+            
+            // Show screen
+            screen.style.display = 'flex';
+            
+            // Start typing effect after a short delay
+            setTimeout(() => {
+                typeWriter(message.text, text, 20);
+            }, 300);
+            
+            // Add celebratory particles
+            createCelebrationParticles();
+        }
+        
+        function closeMessage() {
+            const textElement = document.getElementById('messageText');
+            
+            // Clear any existing typing cursor before closing
+            const existingCursor = textElement.querySelector('.typing-cursor');
+            if (existingCursor) {
+                existingCursor.remove();
+            }
+            
+            document.getElementById('messageScreen').style.display = 'none';
+        }
+        
+        // Close message when clicking outside
+        document.getElementById('messageScreen').addEventListener('click', function(e) {
+            if (e.target === this) closeMessage();
+        });
+        
+        // ==================== EASTER EGG ====================
+        function showEasterEgg() {
+            const screen = document.getElementById('messageScreen');
+            const title = document.getElementById('messageTitle');
+            const text = document.getElementById('messageText');
+            const signature = document.getElementById('messageSignature');
+            
+            title.textContent = "Just One More Thing, Mercy";
+            signature.textContent = "For all that you are and all that you do";
+            
+            const secretMessage = "There is something important I want to express, Mercy. You have an incredible way of making ordinary days feel meaningful. Your kindness is not just an action but part of who you are. Your strength does not need to announce itself; it quietly perseveres. Your presence in this world makes it genuinely better. This is not about a single day on a calendar. It is about taking a moment to acknowledge what a truly remarkable person you are, today and every day.";
+            
+            // Clear the text area
+            text.innerHTML = '';
+            
+            screen.style.display = 'flex';
+            
+            setTimeout(() => {
+                typeWriter(secretMessage, text, 15);
+            }, 300);
+            
+            // Special particle celebration
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    createCelebrationParticles();
+                }, i * 100);
+            }
+        }
+        
+        // ==================== PARTICLE EFFECTS ====================
+        function createCelebrationParticles() {
+            const container = document.getElementById('particleContainer');
+            const symbols = ['❤', '💕', '💗', '💓'];
+            
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = '0s';
+                particle.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                particle.style.opacity = 0.9;
+                container.appendChild(particle);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 15000);
+            }
+        }
+    </script>
+</body>
+</html>
