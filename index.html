@@ -279,7 +279,8 @@
         .photo-frame img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Changed from cover to contain to show full images */
+            background-color: rgba(0, 0, 0, 0.2); /* Add background for letterboxing */
             transition: transform 0.8s;
             display: block;
             pointer-events: none; /* Prevents image from interfering with touch */
@@ -375,8 +376,8 @@
             transform: scale(0.95);
             animation: cardPop 0.3s forwards;
             margin-top: 20px;
-            margin-bottom: 20px;
-            max-height: calc(100vh - 40px);
+            margin-bottom: 60px; /* Increased for close hint */
+            max-height: calc(100vh - 80px); /* Adjusted for close hint */
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -385,7 +386,7 @@
             .message-card {
                 padding: 20px 15px;
                 margin-top: max(10px, env(safe-area-inset-top));
-                max-height: calc(100vh - max(40px, env(safe-area-inset-top)));
+                max-height: calc(100vh - max(80px, env(safe-area-inset-top))); /* Adjusted */
             }
         }
         
@@ -410,6 +411,7 @@
             text-align: left;
             word-break: break-word;
             hyphens: auto;
+            padding-bottom: 10px; /* Added padding to prevent overlap */
         }
         
         .typing-cursor {
@@ -431,6 +433,7 @@
             color: var(--gold);
             text-align: right;
             margin-top: 20px;
+            margin-bottom: 20px; /* Added margin to prevent overlap */
         }
         
         /* CLOSE BUTTON - Made more accessible on mobile */
@@ -462,17 +465,21 @@
             transform: rotate(90deg);
         }
         
-        /* Added a visible close hint for mobile */
+        /* Added a visible close hint for mobile - FIXED POSITIONING */
         .close-hint {
-            position: absolute;
-            bottom: 20px;
+            position: fixed; /* Changed from absolute to fixed */
+            bottom: max(20px, env(safe-area-inset-bottom));
             left: 0;
             right: 0;
             text-align: center;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
-            padding: 10px;
+            padding: 12px 15px;
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(255, 175, 189, 0.2);
             display: none;
+            z-index: 1002;
         }
         
         @media (max-width: 768px) {
@@ -607,6 +614,7 @@
                 padding: 40px 35px;
                 margin-top: 0;
                 max-height: 85vh;
+                margin-bottom: 20px; /* Reset for desktop */
             }
             
             .close-hint {
@@ -742,8 +750,9 @@
             <h2 id="messageTitle">For Mercy</h2>
             <div class="message-text" id="messageText"></div>
             <div class="signature" id="messageSignature"></div>
-            <div class="close-hint">Tap outside or the X to close</div>
         </div>
+        <!-- Moved close-hint OUTSIDE the message-card -->
+        <div class="close-hint">Tap outside or the X to close</div>
     </div>
     
     <script>
