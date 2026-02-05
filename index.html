@@ -2,27 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a1a">
     <title>A Valentine's Surprise For Mercy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* MOBILE-FIRST CSS - OPTIMIZED */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+        
+        :root {
+            --primary-color: #ffafbd;
+            --secondary-color: #8b0000;
+            --background-dark: #0a0a1a;
+            --text-light: #f5e9e9;
+            --gold: #ffd700;
+        }
+        
         body {
             font-family: 'Playfair Display', serif;
-            background: #0a0a1a;
-            color: #f5e9e9;
+            background: var(--background-dark);
+            color: var(--text-light);
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
-        /* Opening Curtain */
+        
+        /* MOBILE-OPTIMIZED CURTAIN - With visible close button */
         #curtain {
             position: fixed;
             top: 0;
@@ -36,142 +52,223 @@
             justify-content: center;
             align-items: center;
             animation: curtainRise 2s ease-in-out 3s forwards;
+            padding: 20px;
+            text-align: center;
+            touch-action: manipulation;
         }
+        
+        /* Skip curtain button for mobile */
+        .skip-curtain {
+            position: absolute;
+            top: max(20px, env(safe-area-inset-top));
+            right: max(20px, env(safe-area-inset-right));
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2001;
+            animation: fadeIn 0.5s ease-in 1s forwards;
+            opacity: 0;
+            min-width: 44px;
+            min-height: 44px;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
         @keyframes curtainRise {
             to { transform: translateY(-100%); }
         }
+        
         .curtain-text {
             font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
-            color: gold;
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            color: var(--gold);
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             opacity: 0;
             animation: fadeInText 1.5s ease-in 0.5s forwards;
+            line-height: 1.2;
+            padding: 0 10px;
         }
-        @keyframes fadeInText {
-            to { opacity: 1; }
-        }
+        
         .curtain-subtext {
-            font-size: 1.5rem;
-            color: #ffd700;
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            color: var(--gold);
             opacity: 0;
             animation: fadeInText 1.5s ease-in 1.5s forwards;
+            padding: 0 10px;
         }
+        
         /* Main Container */
         .container {
             max-width: 1400px;
             width: 100%;
             text-align: center;
-            padding: 40px 20px;
+            padding: 20px 15px;
             opacity: 0;
             animation: fadeInMain 1s ease-out 4s forwards;
         }
+        
         @keyframes fadeInMain {
             to { opacity: 1; }
         }
+        
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
+            font-size: clamp(2rem, 8vw, 4rem);
             margin-bottom: 10px;
-            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            background: linear-gradient(to right, var(--primary-color), #ffc3a0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            line-height: 1.1;
         }
+        
         .her-name {
             font-family: 'Dancing Script', cursive;
-            font-size: 6rem;
-            color: #ffafbd;
+            font-size: clamp(3rem, 12vw, 6rem);
+            color: var(--primary-color);
             font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(255, 175, 189, 0.5);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(255, 175, 189, 0.5);
             cursor: pointer;
             transition: all 0.3s;
+            line-height: 1;
+            -webkit-user-select: none;
+            user-select: none;
         }
-        .her-name:hover {
+        
+        .her-name:active {
             transform: scale(1.05);
-            text-shadow: 0 0 50px rgba(255, 175, 189, 0.8);
+            text-shadow: 0 0 30px rgba(255, 175, 189, 0.8);
         }
+        
         .tagline {
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 3.5vw, 1.4rem);
             color: #d1b3b3;
-            margin-bottom: 50px;
+            margin: 30px auto;
             max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.8;
+            line-height: 1.6;
+            padding: 0 10px;
         }
-        /* Music Controls */
+        
+        /* Music Controls - Mobile optimized */
         .music-controls {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: max(20px, env(safe-area-inset-top));
+            right: max(20px, env(safe-area-inset-right));
             z-index: 100;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 50px;
-            padding: 10px 20px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 44px;
+            min-height: 44px;
         }
+        
         .music-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: transform 0.3s;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .music-btn:hover {
-            transform: scale(1.2);
+        
+        .music-controls span {
+            display: none;
+            font-size: 0.9rem;
         }
-        /* Gallery with Floating Animation */
+        
+        @media (min-width: 768px) {
+            .music-controls {
+                padding: 10px 20px;
+            }
+            .music-controls span {
+                display: inline;
+            }
+        }
+        
+        /* Gallery - Mobile first grid */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
         }
+        
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
         .photo-frame {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(15px);
-            border-radius: 20px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             cursor: pointer;
-            height: 380px;
+            height: 280px;
             animation: float 6s ease-in-out infinite;
+            touch-action: manipulation;
         }
+        
+        @media (max-width: 480px) {
+            .photo-frame {
+                height: 250px;
+            }
+        }
+        
         .photo-frame:nth-child(2n) {
             animation-delay: 1s;
         }
+        
         .photo-frame:nth-child(3n) {
             animation-delay: 2s;
         }
+        
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-8px); }
         }
-        .photo-frame:hover {
-            transform: scale(1.05);
-            box-shadow: 0 30px 60px rgba(255, 175, 189, 0.4);
-            animation-play-state: paused;
+        
+        .photo-frame:active {
+            transform: scale(0.98);
+            box-shadow: 0 15px 30px rgba(255, 175, 189, 0.4);
         }
+        
         .photo-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 1s;
+            transition: transform 0.8s;
+            display: block;
         }
-        .photo-frame:hover img {
-            transform: scale(1.1);
-        }
+        
         .photo-overlay {
             position: absolute;
             bottom: 0;
@@ -179,54 +276,55 @@
             right: 0;
             background: linear-gradient(to top, rgba(138, 0, 0, 0.9), transparent);
             color: white;
-            padding: 30px 20px 25px;
-            transform: translateY(100%);
-            transition: transform 0.5s;
-        }
-        .photo-frame:hover .photo-overlay {
+            padding: 20px 15px 15px;
             transform: translateY(0);
+            opacity: 1;
         }
+        
         .photo-overlay h3 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #ffd700;
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            color: var(--gold);
         }
-        /* Memory Timeline */
+        
+        .photo-overlay p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Memory Timeline - Mobile optimized */
         .timeline {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 50px;
+            gap: 8px;
+            margin: 30px 0;
             flex-wrap: wrap;
+            padding: 0 10px;
         }
+        
         .timeline-dot {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             background: #555;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
+            flex-shrink: 0;
+            touch-action: manipulation;
         }
+        
         .timeline-dot.active {
-            background: #ffafbd;
-            transform: scale(1.5);
-            box-shadow: 0 0 20px #ffafbd;
+            background: var(--primary-color);
+            transform: scale(1.3);
+            box-shadow: 0 0 15px var(--primary-color);
         }
-        .timeline-dot:hover::after {
-            content: attr(data-title);
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            white-space: nowrap;
-            font-size: 0.9rem;
+        
+        .timeline-dot:active {
+            transform: scale(1.2);
         }
-        /* Message Screen */
+        
+        /* Message Screen - MOBILE OPTIMIZED */
         .message-screen {
             display: none;
             position: fixed;
@@ -234,77 +332,133 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 26, 0.95);
+            background: rgba(10, 10, 26, 0.98);
             z-index: 1000;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Changed from center to flex-start */
+            padding: max(20px, env(safe-area-inset-top)) 15px max(20px, env(safe-area-inset-bottom));
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
+        
         .message-card {
             background: linear-gradient(145deg, #1a1a2e, #16213e);
-            padding: 60px;
-            border-radius: 30px;
+            padding: 25px 20px;
+            border-radius: 20px;
             max-width: 800px;
-            width: 90%;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
             position: relative;
             border: 2px solid rgba(255, 175, 189, 0.3);
-            transform: scale(0.8);
-            animation: cardPop 0.7s forwards;
+            transform: scale(0.95);
+            animation: cardPop 0.3s forwards;
+            margin-top: 20px; /* Added margin for better positioning */
+            margin-bottom: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
+        
+        @media (max-width: 480px) {
+            .message-card {
+                padding: 20px 15px;
+                margin-top: max(10px, env(safe-area-inset-top));
+                max-height: calc(100vh - max(40px, env(safe-area-inset-top)));
+            }
+        }
+        
         @keyframes cardPop {
             to { transform: scale(1); }
         }
+        
         .message-card h2 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            margin-bottom: 30px;
-            color: #ffafbd;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            line-height: 1.2;
+            padding-right: 40px; /* Space for close button */
         }
+        
         .message-text {
-            font-size: 1.6rem;
-            line-height: 1.9;
-            margin-bottom: 40px;
+            font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+            line-height: 1.6;
+            margin-bottom: 30px;
             color: #f0e6e6;
-            min-height: 150px;
             text-align: left;
+            word-break: break-word;
+            hyphens: auto;
         }
+        
         .typing-cursor {
             display: inline-block;
             width: 3px;
-            background-color: #ffafbd;
+            background-color: var(--primary-color);
             animation: blink 1s infinite;
             margin-left: 2px;
         }
+        
         @keyframes blink {
             0%, 50% { opacity: 1; }
             51%, 100% { opacity: 0; }
         }
+        
         .signature {
             font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
-            color: #ffd700;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            color: var(--gold);
             text-align: right;
-            margin-top: 30px;
+            margin-top: 20px;
         }
+        
+        /* CLOSE BUTTON - Made more accessible on mobile */
         .close-btn {
             position: absolute;
-            top: 25px;
-            right: 25px;
+            top: 15px;
+            right: 15px;
             background: rgba(255, 175, 189, 0.1);
-            border: 1px solid #ffafbd;
-            color: #ffafbd;
-            width: 50px;
-            height: 50px;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            width: 44px; /* Increased for mobile touch */
+            height: 44px; /* Increased for mobile touch */
             border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
+            z-index: 1001;
+            touch-action: manipulation;
         }
-        .close-btn:hover {
-            background: #ffafbd;
+        
+        .close-btn:active {
+            background: var(--primary-color);
             color: #1a1a2e;
             transform: rotate(90deg);
         }
+        
+        /* Added a visible close hint for mobile */
+        .close-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            padding: 10px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .close-hint {
+                display: block;
+            }
+        }
+        
         /* Particles */
         .particles {
             position: fixed;
@@ -315,12 +469,15 @@
             pointer-events: none;
             z-index: -1;
         }
+        
         .particle {
             position: absolute;
             color: rgba(255, 175, 189, 0.7);
-            font-size: 24px;
+            font-size: 20px;
             animation: particleFloat 15s linear infinite;
+            will-change: transform;
         }
+        
         @keyframes particleFloat {
             0% {
                 transform: translateY(100vh) rotate(0deg);
@@ -333,49 +490,154 @@
                 opacity: 0;
             }
         }
+        
         /* Footer */
         .footer-note {
-            margin-top: 50px;
+            margin-top: 30px;
             color: #888;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+            padding: 0 10px;
         }
-        /* Responsive */
-        @media (max-width: 1100px) {
-            .gallery { grid-template-columns: repeat(2, 1fr); }
+        
+        /* Performance optimizations */
+        @media (prefers-reduced-motion: reduce) {
+            .photo-frame,
+            .her-name,
+            .close-btn,
+            .music-btn {
+                animation: none !important;
+                transition: none !important;
+            }
         }
-        @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
-            .her-name { font-size: 4.5rem; }
-            .curtain-text { font-size: 2.8rem; }
-            .gallery { grid-template-columns: 1fr; }
-            .photo-frame { height: 350px; }
-            .message-card { padding: 40px; }
-            .message-card h2 { font-size: 2.8rem; }
-            .message-text { font-size: 1.4rem; }
+        
+        /* Tablet and Desktop enhancements */
+        @media (min-width: 768px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            .gallery {
+                gap: 25px;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .photo-frame {
+                height: 350px;
+                border-radius: 20px;
+            }
+            
+            .photo-frame:hover {
+                transform: scale(1.05);
+                box-shadow: 0 30px 60px rgba(255, 175, 189, 0.4);
+            }
+            
+            .photo-frame:hover img {
+                transform: scale(1.1);
+            }
+            
+            .photo-overlay {
+                transform: translateY(100%);
+                opacity: 0;
+                transition: transform 0.5s, opacity 0.5s;
+            }
+            
+            .photo-frame:hover .photo-overlay {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .her-name:hover {
+                transform: scale(1.05);
+                text-shadow: 0 0 50px rgba(255, 175, 189, 0.8);
+            }
+            
+            .close-btn:hover {
+                background: var(--primary-color);
+                color: #1a1a2e;
+                transform: rotate(90deg);
+            }
+            
+            .music-btn:hover {
+                transform: scale(1.2);
+            }
+            
+            .timeline-dot:hover::after {
+                content: attr(data-title);
+                position: absolute;
+                bottom: 25px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 5px;
+                white-space: nowrap;
+                font-size: 0.9rem;
+            }
+            
+            /* Desktop message screen */
+            .message-screen {
+                align-items: center;
+                padding: 20px;
+            }
+            
+            .message-card {
+                padding: 40px 35px;
+                margin-top: 0;
+                max-height: 85vh;
+            }
+            
+            .close-hint {
+                display: none;
+            }
+            
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-20px); }
+            }
         }
-        @media (max-width: 480px) {
-            h1 { font-size: 2.5rem; }
-            .her-name { font-size: 3.5rem; }
-            .curtain-text { font-size: 2.2rem; }
-            .photo-frame { height: 300px; }
+        
+        @media (min-width: 1024px) {
+            .message-card {
+                padding: 60px 50px;
+            }
+            
+            .gallery {
+                gap: 30px;
+                margin-bottom: 60px;
+            }
+            
+            .photo-frame {
+                height: 380px;
+            }
+        }
+        
+        /* Large screens */
+        @media (min-width: 1400px) {
+            .container {
+                padding: 60px 40px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Opening Curtain -->
+    <!-- Opening Curtain with Skip Button -->
     <div id="curtain">
+        <button class="skip-curtain" id="skipCurtain" aria-label="Skip introduction">
+            <i class="fas fa-forward"></i>
+        </button>
         <div class="curtain-text">A Special Presentation</div>
         <div class="curtain-subtext">For Someone Extraordinary</div>
     </div>
     
     <!-- Background Music (Romantic Piano) -->
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="metadata">
         <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moment-488.mp3" type="audio/mpeg">
     </audio>
     
     <!-- Music Controls -->
     <div class="music-controls">
-        <button class="music-btn" id="musicToggle">
+        <button class="music-btn" id="musicToggle" aria-label="Toggle music">
             <i class="fas fa-volume-up"></i>
         </button>
         <span>Romantic Piano</span>
@@ -387,58 +649,58 @@
     <!-- Main Content -->
     <div class="container">
         <h1>A Valentine's Journey For</h1>
-        <div class="her-name" id="mercyName">Mercy</div>
-        <p class="tagline">Each photograph is a window to a beautiful memory. Click to discover a message written just for you, Mercy.</p>
+        <div class="her-name" id="mercyName" role="button" aria-label="Double tap for a special message">Mercy</div>
+        <p class="tagline">Each photograph is a window to a beautiful memory. Tap to discover a message written just for you, Mercy.</p>
         
         <!-- Interactive Timeline -->
-        <div class="timeline" id="memoryTimeline">
-            <div class="timeline-dot active" data-title="The Smile" data-message="1"></div>
-            <div class="timeline-dot" data-title="Your Presence" data-message="2"></div>
-            <div class="timeline-dot" data-title="Pure Joy" data-message="3"></div>
-            <div class="timeline-dot" data-title="Thoughtful Gaze" data-message="4"></div>
-            <div class="timeline-dot" data-title="Cherished Memory" data-message="5"></div>
-            <div class="timeline-dot" data-title="Authentically You" data-message="6"></div>
+        <div class="timeline" id="memoryTimeline" role="tablist">
+            <div class="timeline-dot active" data-title="The Smile" data-message="1" role="tab" aria-selected="true"></div>
+            <div class="timeline-dot" data-title="Your Presence" data-message="2" role="tab"></div>
+            <div class="timeline-dot" data-title="Pure Joy" data-message="3" role="tab"></div>
+            <div class="timeline-dot" data-title="Thoughtful Gaze" data-message="4" role="tab"></div>
+            <div class="timeline-dot" data-title="Cherished Memory" data-message="5" role="tab"></div>
+            <div class="timeline-dot" data-title="Authentically You" data-message="6" role="tab"></div>
         </div>
         
         <!-- Photo Gallery -->
         <div class="gallery" id="photoGallery">
-            <div class="photo-frame" data-message="1">
-                <img src="https://i.imgur.com/Y02Zfi2.jpg" alt="Mercy's beautiful smile">
+            <div class="photo-frame" data-message="1" role="button" tabindex="0">
+                <img src="https://i.imgur.com/Y02Zfi2.jpg" alt="Mercy's beautiful smile" loading="lazy">
                 <div class="photo-overlay">
                     <h3>The Smile</h3>
                     <p>A radiant expression that brightens every moment</p>
                 </div>
             </div>
-            <div class="photo-frame" data-message="2">
-                <img src="https://i.imgur.com/ZwWvVow.jpg" alt="Mercy's lovely presence">
+            <div class="photo-frame" data-message="2" role="button" tabindex="0">
+                <img src="https://i.imgur.com/ZwWvVow.jpg" alt="Mercy's lovely presence" loading="lazy">
                 <div class="photo-overlay">
                     <h3>Your Presence</h3>
                     <p>A calming energy that makes every space better</p>
                 </div>
             </div>
-            <div class="photo-frame" data-message="3">
-                <img src="https://i.imgur.com/zO1i3rl.jpg" alt="Mercy's joyful spirit">
+            <div class="photo-frame" data-message="3" role="button" tabindex="0">
+                <img src="https://i.imgur.com/zO1i3rl.jpg" alt="Mercy's joyful spirit" loading="lazy">
                 <div class="photo-overlay">
                     <h3>Pure Joy</h3>
                     <p>Laughter and happiness that's truly infectious</p>
                 </div>
             </div>
-            <div class="photo-frame" data-message="4">
-                <img src="https://i.imgur.com/O07So0q.jpg" alt="Mercy's thoughtful gaze">
+            <div class="photo-frame" data-message="4" role="button" tabindex="0">
+                <img src="https://i.imgur.com/O07So0q.jpg" alt="Mercy's thoughtful gaze" loading="lazy">
                 <div class="photo-overlay">
                     <h3>Thoughtful Gaze</h3>
                     <p>A look that reveals depth and compassion</p>
                 </div>
             </div>
-            <div class="photo-frame" data-message="5">
-                <img src="https://i.imgur.com/brGNsm8.jpg" alt="A cherished memory with Mercy">
+            <div class="photo-frame" data-message="5" role="button" tabindex="0">
+                <img src="https://i.imgur.com/brGNsm8.jpg" alt="A cherished memory with Mercy" loading="lazy">
                 <div class="photo-overlay">
                     <h3>Cherished Memory</h3>
                     <p>A moment in time made perfect</p>
                 </div>
             </div>
-            <div class="photo-frame" data-message="6">
-                <img src="https://i.imgur.com/lgro0jh.jpg" alt="Mercy being authentically herself">
+            <div class="photo-frame" data-message="6" role="button" tabindex="0">
+                <img src="https://i.imgur.com/lgro0jh.jpg" alt="Mercy being authentically herself" loading="lazy">
                 <div class="photo-overlay">
                     <h3>Authentically You</h3>
                     <p>Genuine in every way that matters</p>
@@ -450,12 +712,15 @@
     </div>
     
     <!-- Message Screen -->
-    <div class="message-screen" id="messageScreen">
+    <div class="message-screen" id="messageScreen" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="messageTitle">
         <div class="message-card">
-            <button class="close-btn" id="closeMessage"><i class="fas fa-times"></i></button>
+            <button class="close-btn" id="closeMessage" aria-label="Close message">
+                <i class="fas fa-times"></i>
+            </button>
             <h2 id="messageTitle">For Mercy</h2>
             <div class="message-text" id="messageText"></div>
             <div class="signature" id="messageSignature"></div>
+            <div class="close-hint">Tap outside or the X to close</div>
         </div>
     </div>
     
@@ -465,42 +730,103 @@
             // Create particles
             createParticles();
             
-            // Start background music (with user interaction)
+            // Setup music
             setupMusic();
             
             // Setup timeline
             setupTimeline();
             
-            // Setup photo click events
+            // Setup gallery
             setupGallery();
             
             // Setup close button
             document.getElementById('closeMessage').addEventListener('click', closeMessage);
             
-            // Setup Mercy name double-click (Easter egg)
-            document.getElementById('mercyName').addEventListener('dblclick', showEasterEgg);
+            // Setup Mercy name double-tap
+            setupDoubleTap();
             
-            // Auto-open first message after curtain rises
+            // Setup skip curtain button
+            document.getElementById('skipCurtain').addEventListener('click', skipCurtain);
+            document.getElementById('skipCurtain').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                skipCurtain();
+            });
+            
+            // Auto-open first message
             setTimeout(() => {
                 if (!sessionStorage.getItem('mercyValentineShown')) {
                     openMessage(1);
                     sessionStorage.setItem('mercyValentineShown', 'true');
                 }
             }, 4500);
+            
+            // Handle orientation changes
+            window.addEventListener('orientationchange', handleOrientation);
         });
+        
+        // ==================== CURTAIN HANDLING ====================
+        function skipCurtain() {
+            const curtain = document.getElementById('curtain');
+            curtain.style.animation = 'curtainRise 1s ease-in-out forwards';
+            
+            // Show main content immediately
+            const container = document.querySelector('.container');
+            container.style.animation = 'fadeInMain 0.5s ease-out forwards';
+            
+            // Remove skip button
+            document.getElementById('skipCurtain').style.display = 'none';
+            
+            // Force curtain to disappear
+            setTimeout(() => {
+                curtain.style.display = 'none';
+            }, 1000);
+        }
+        
+        // ==================== TOUCH EVENT HANDLERS ====================
+        let lastTap = 0;
+        
+        function setupDoubleTap() {
+            const mercyName = document.getElementById('mercyName');
+            let tapCount = 0;
+            let tapTimer;
+            
+            mercyName.addEventListener('click', function(e) {
+                tapCount++;
+                
+                if (tapCount === 1) {
+                    tapTimer = setTimeout(function() {
+                        tapCount = 0;
+                    }, 300);
+                } else if (tapCount === 2) {
+                    clearTimeout(tapTimer);
+                    tapCount = 0;
+                    showEasterEgg();
+                }
+                
+                e.preventDefault();
+            });
+            
+            // Prevent context menu on long press
+            mercyName.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+        }
         
         // ==================== PARTICLE SYSTEM ====================
         function createParticles() {
             const container = document.getElementById('particleContainer');
             const symbols = ['❤', '💕', '💗', '💓'];
+            const particleCount = window.innerWidth < 768 ? 20 : 40;
             
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
+                particle.setAttribute('aria-hidden', 'true');
                 particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                particle.style.fontSize = (Math.random() * 20 + 12) + 'px';
                 particle.style.opacity = Math.random() * 0.7 + 0.3;
                 container.appendChild(particle);
             }
@@ -512,26 +838,40 @@
             const toggleBtn = document.getElementById('musicToggle');
             const icon = toggleBtn.querySelector('i');
             
-            // Try to play music after user interaction
-            function playMusic() {
-                music.volume = 0.4;
-                music.play().catch(e => console.log("Audio play failed:", e));
-                document.removeEventListener('click', playMusic);
+            // Set initial volume
+            music.volume = 0.3;
+            
+            // Enable audio on first interaction
+            function enableAudio() {
+                music.play().then(() => {
+                    music.pause();
+                    music.currentTime = 0;
+                }).catch(e => console.log("Audio initialization:", e));
+                document.removeEventListener('click', enableAudio);
+                document.removeEventListener('touchstart', enableAudio);
             }
             
-            // Start music on first user interaction
-            document.addEventListener('click', playMusic, { once: true });
+            document.addEventListener('click', enableAudio, { once: true });
+            document.addEventListener('touchstart', enableAudio, { once: true });
             
-            // Toggle music on button click
-            toggleBtn.addEventListener('click', () => {
+            // Toggle music
+            toggleBtn.addEventListener('click', toggleMusic);
+            toggleBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                toggleMusic();
+            });
+            
+            function toggleMusic() {
                 if (music.paused) {
-                    music.play();
+                    music.play().catch(e => console.log("Play failed:", e));
                     icon.className = 'fas fa-volume-up';
+                    toggleBtn.setAttribute('aria-label', 'Mute music');
                 } else {
                     music.pause();
                     icon.className = 'fas fa-volume-mute';
+                    toggleBtn.setAttribute('aria-label', 'Play music');
                 }
-            });
+            }
         }
         
         // ==================== TIMELINE ====================
@@ -539,16 +879,26 @@
             const dots = document.querySelectorAll('.timeline-dot');
             
             dots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    // Update active dot
-                    dots.forEach(d => d.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Open corresponding message
-                    const messageId = this.getAttribute('data-message');
-                    openMessage(messageId);
+                dot.addEventListener('click', handleTimelineClick);
+                dot.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    handleTimelineClick.call(this);
                 });
             });
+            
+            function handleTimelineClick() {
+                // Update active dot
+                dots.forEach(d => {
+                    d.classList.remove('active');
+                    d.setAttribute('aria-selected', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+                
+                // Open corresponding message
+                const messageId = this.getAttribute('data-message');
+                openMessage(messageId);
+            }
         }
         
         // ==================== GALLERY & MESSAGES ====================
@@ -556,22 +906,38 @@
             const frames = document.querySelectorAll('.photo-frame');
             
             frames.forEach(frame => {
-                frame.addEventListener('click', function() {
-                    const messageId = this.getAttribute('data-message');
-                    openMessage(messageId);
-                    
-                    // Update timeline
-                    document.querySelectorAll('.timeline-dot').forEach(dot => {
-                        dot.classList.remove('active');
-                        if (dot.getAttribute('data-message') === messageId) {
-                            dot.classList.add('active');
-                        }
-                    });
+                frame.addEventListener('click', handleFrameClick);
+                frame.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    handleFrameClick.call(this);
+                });
+                
+                // Add keyboard support
+                frame.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleFrameClick.call(this);
+                    }
                 });
             });
+            
+            function handleFrameClick() {
+                const messageId = this.getAttribute('data-message');
+                openMessage(messageId);
+                
+                // Update timeline
+                document.querySelectorAll('.timeline-dot').forEach(dot => {
+                    dot.classList.remove('active');
+                    dot.setAttribute('aria-selected', 'false');
+                    if (dot.getAttribute('data-message') === messageId) {
+                        dot.classList.add('active');
+                        dot.setAttribute('aria-selected', 'true');
+                    }
+                });
+            }
         }
         
-        // Messages for Mercy - ALL IN ENGLISH
+        // Messages for Mercy
         const messagesForMercy = {
             1: {
                 title: "That Beautiful Smile of Yours",
@@ -605,12 +971,9 @@
             }
         };
         
-        // FIXED: Typing effect for messages
         function typeWriter(text, element, speed = 30) {
-            // Clear any existing content and cursor
             element.innerHTML = '';
             
-            // Remove any existing cursor
             const existingCursor = element.querySelector('.typing-cursor');
             if (existingCursor) {
                 existingCursor.remove();
@@ -624,11 +987,13 @@
                     currentText += text.charAt(i);
                     element.innerHTML = currentText;
                     i++;
-                    setTimeout(type, speed);
+                    requestAnimationFrame(() => {
+                        setTimeout(type, speed);
+                    });
                 } else {
-                    // Add blinking cursor at the end
                     const cursor = document.createElement('span');
                     cursor.className = 'typing-cursor';
+                    cursor.setAttribute('aria-hidden', 'true');
                     element.appendChild(cursor);
                 }
             }
@@ -647,34 +1012,46 @@
             title.textContent = message.title;
             signature.textContent = message.signature;
             
-            // Clear the text area completely
+            // Clear text
             text.innerHTML = '';
             
             // Show screen
             screen.style.display = 'flex';
+            screen.setAttribute('aria-hidden', 'false');
             
-            // Start typing effect after a short delay
+            // Scroll to top of message
+            screen.scrollTop = 0;
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+            
+            // Start typing effect
             setTimeout(() => {
-                typeWriter(message.text, text, 20);
+                typeWriter(message.text, text, 25);
             }, 300);
             
-            // Add celebratory particles
+            // Create celebration particles
             createCelebrationParticles();
         }
         
         function closeMessage() {
+            const screen = document.getElementById('messageScreen');
             const textElement = document.getElementById('messageText');
             
-            // Clear any existing typing cursor before closing
+            // Clear cursor
             const existingCursor = textElement.querySelector('.typing-cursor');
             if (existingCursor) {
                 existingCursor.remove();
             }
             
-            document.getElementById('messageScreen').style.display = 'none';
+            screen.style.display = 'none';
+            screen.setAttribute('aria-hidden', 'true');
+            
+            // Restore body scrolling
+            document.body.style.overflow = '';
         }
         
-        // Close message when clicking outside
+        // Close message when tapping outside
         document.getElementById('messageScreen').addEventListener('click', function(e) {
             if (e.target === this) closeMessage();
         });
@@ -691,17 +1068,17 @@
             
             const secretMessage = "There is something important I want to express, Mercy. You have an incredible way of making ordinary days feel meaningful. Your kindness is not just an action but part of who you are. Your strength does not need to announce itself; it quietly perseveres. Your presence in this world makes it genuinely better. This is not about a single day on a calendar. It is about taking a moment to acknowledge what a truly remarkable person you are, today and every day.";
             
-            // Clear the text area
             text.innerHTML = '';
-            
             screen.style.display = 'flex';
+            screen.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
             
             setTimeout(() => {
                 typeWriter(secretMessage, text, 15);
             }, 300);
             
-            // Special particle celebration
-            for (let i = 0; i < 30; i++) {
+            // Special celebration
+            for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     createCelebrationParticles();
                 }, i * 100);
@@ -713,17 +1090,17 @@
             const container = document.getElementById('particleContainer');
             const symbols = ['❤', '💕', '💗', '💓'];
             
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 5; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
+                particle.setAttribute('aria-hidden', 'true');
                 particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.animationDelay = '0s';
-                particle.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                particle.style.fontSize = (Math.random() * 25 + 15) + 'px';
                 particle.style.opacity = 0.9;
                 container.appendChild(particle);
                 
-                // Remove after animation
                 setTimeout(() => {
                     if (particle.parentNode) {
                         particle.parentNode.removeChild(particle);
@@ -731,6 +1108,36 @@
                 }, 15000);
             }
         }
+        
+        // ==================== ORIENTATION HANDLING ====================
+        function handleOrientation() {
+            // Debounce orientation changes
+            clearTimeout(window.orientationTimer);
+            window.orientationTimer = setTimeout(() => {
+                // Adjust particles for new orientation
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(p => {
+                    p.style.left = Math.random() * 100 + 'vw';
+                });
+                
+                // Close any open messages on orientation change
+                closeMessage();
+            }, 200);
+        }
+        
+        // ==================== PERFORMANCE OPTIMIZATIONS ====================
+        // Use passive event listeners for better scroll performance
+        document.addEventListener('touchstart', function() {}, { passive: true });
+        document.addEventListener('touchmove', function() {}, { passive: true });
+        
+        // Preload important images
+        window.addEventListener('load', function() {
+            const images = document.querySelectorAll('.photo-frame img');
+            images.forEach(img => {
+                if (img.complete) return;
+                img.loading = 'eager';
+            });
+        });
     </script>
 </body>
 </html>
